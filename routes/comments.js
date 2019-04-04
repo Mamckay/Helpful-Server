@@ -23,7 +23,7 @@ router.get('/', (req, res, next) => {
 
 /* Get all comments for an event */
 router.get('/event/:eventId', jwtAuth, (req, res, next) => {
-  const {eventId} = req.params;
+  const { eventId } = req.params;
   Comment.find({ eventId })
     .sort({ createdAt: 'desc' })
     .then(comments => {
@@ -96,7 +96,7 @@ router.post('/', jwtAuth, (req, res, next) => {
 });
 
 router.put('/', jwtAuth, (req, res, next) => {
-  let { comment,orgId } = req.body;
+  let { comment, orgId } = req.body;
   const userId = req.user.id;
   let Comment = {};
   /* Validation */
@@ -119,15 +119,15 @@ router.put('/', jwtAuth, (req, res, next) => {
       Comment.rating = comment;
     }
   }
-//   if (description) {
-//     if (typeof description !== String) {
-//       const err = new Error('The `description` is not valid');
-//       err.status = 400;
-//       return next(err);
-//     } else {
-//       Comment.description = description;
-//     }
-//   }
+  //   if (description) {
+  //     if (typeof description !== String) {
+  //       const err = new Error('The `description` is not valid');
+  //       err.status = 400;
+  //       return next(err);
+  //     } else {
+  //       Comment.description = description;
+  //     }
+  //   }
   /*            */
 
   Comment.findOneAndUpdate({ userId, organizationId: orgId }, { Comment })
@@ -151,5 +151,13 @@ router.delete('/', jwtAuth, (req, res, next) => {
       next(err);
     });
 });
+
+
+
+router.get('/tester', jwtAuth, (req, res, next) => {
+  const userId = req.user.id;
+  console.log(userId);
+});
+
 
 module.exports = router;
